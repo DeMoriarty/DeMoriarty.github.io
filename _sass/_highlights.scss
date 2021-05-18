@@ -21,7 +21,10 @@
 }
 
 code {
-  font-family:'Bitstream Vera Sans Mono','Courier', monospace;
+  font-family:"Source Code Pro", 'Menlo', 'Consolas', 'Monaco', monospace;
+  font-size: 14px;
+  tab-size: 2;
+  line-height: 1.35;
 }
 
 .highlight pre {
