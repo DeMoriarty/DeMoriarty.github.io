@@ -10,21 +10,23 @@
 }
 
 .highlight {
-  background-color: #272822;
-  padding: 3px 3px 3px 3px;
-  border: 1px solid #ddd;
-  -moz-box-shadow: 3px 3px rgba(0,0,0,0.1);
-  -webkit-box-shadow: 3px 3px rgba(0,0,0,0.1);
-  box-shadow: 3px 3px rgba(0,0,0,0.1);
-  margin: 7px 0 7px 0;
+  background-color: #272727;
+  padding: 0px 0px 0px 0px;
+  -moz-box-shadow: inset 0 1px 10px rgb(0 0 0 / 30%), 0 1px 0 rgb(265 255 255 / 10%), 0 -1px 0 rgb(0 0 0 / 50%);
+  -webkit-box-shadow: inset 0 1px 10px rgb(0 0 0 / 30%), 0 1px 0 rgb(265 255 255 / 10%), 0 -1px 0 rgb(0 0 0 / 50%);
+  box-shadow: inset 0 1px 10px rgb(0 0 0 / 30%), 0 1px 0 rgb(265 255 255 / 10%), 0 -1px 0 rgb(0 0 0 / 50%);
+  margin: 0px 0 0px 0;
   overflow: auto;
+  border-radius: 5px;
 }
 
 code {
   font-family:'Bitstream Vera Sans Mono','Courier', monospace;
 }
 
-.highlight pre { background-color: #272822; }
+.highlight pre {
+  padding: 10px 0.5em;
+}
 .highlight .hll { background-color: #272822; }
 .highlight .c { color: #75715e } /* Comment */
 .highlight .err { color: #960050; background-color: #1e0010 } /* Error */
