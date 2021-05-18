@@ -20,6 +20,11 @@
   overflow: auto;
 }
 
+div < .highlight {
+  background-color: #efefef;
+  border: 0;
+}
+
 code {
   font-family:'Bitstream Vera Sans Mono','Courier', monospace;
 }
