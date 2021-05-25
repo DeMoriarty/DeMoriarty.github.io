@@ -19,8 +19,9 @@ html {
 
 body {
 	background: $backgroundGray;
-  font: 20px/1.7 $helvetica;
-  color: $lighterGray;
+  font: 19px/1.6 $helvetica;
+  color: $lightGray;
+  font-weight: lighter;
 }
 
 .container {
