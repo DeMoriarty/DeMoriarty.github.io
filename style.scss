@@ -111,6 +111,7 @@ strong, b {
 
 img {
   max-width: 100%;
+  filter: hue-rotate(180deg);
 }
 
 summary {
