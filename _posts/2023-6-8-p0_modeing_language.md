@@ -12,7 +12,7 @@ In this series of blog posts, I will try to answer some of these questions from 
 What is modeling? in my opinion it's simply replacing subject of interest with something else that is similar in quality, appearance or behavior, but smaller, cheaper, more manageable and controllable. For example, we may use aircraft models to study the aerodynamics of real airplanes, use weather models to predict the future weather, or use fashion models and mannequins to display how a piece cloth may look on customers' body. Similarly, we can use a **model of the language** to study human language, cognition and intelligence. Usually, modeling is a cyclic process: we use our initial understanding to build a model, we use the model to improve our understanding, and use that to make a better model. 
 
 
-<img class="inverted-plot" src="https://raw.githubusercontent.com/DeMoriarty/DeMoriarty.github.io/master/images/modelig_cycle.png"/>  
+<img class="centered bg-white" src="https://raw.githubusercontent.com/DeMoriarty/DeMoriarty.github.io/master/images/modelig_cycle.png"/>  
 
 It may sound like this series is all about Large Language Models (LLM), since that's probably the first thing come to our mind when talking about modeling language. LLMs are extremely good at modeling language, we must give them credit. But how much can they contribute to understanding of language and human mind? Well, not a lot. One of the biggest problems of LLMs is that they are huge black-boxes, which means they are not inherently interpretable. Remember that modeling is a cyclic process, when modeling doesn't provide better understanding, we can't make a better model. In fact, most of the recent advancement in LLMs comes from one ridiculously simple idea: bigger is better. 
 
