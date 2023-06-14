@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Modeling Language: 0. Introduction
+title: Modeling Language: 0 Introduction
 ---
 
 How do we acquire and use language? how do babies learn word meanings, word compositions and grammar? how can children produce phrases or sentences that they themselves have never heard? and how can a computer do the same? 
