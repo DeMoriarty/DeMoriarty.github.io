@@ -25,13 +25,7 @@ Another simple method, is converting cooccurrence counts into binary values: 0 i
 The most popular and best performing rescaling method is Pointwise Mutual Information (PMI):
 $$
 \textrm{PMI}(w_1, w_2) = 
-\log
-\dfrac{
-		P(w_1, w_2)
-	}{
-		P(w_1)P(w_2)
-	}
-
+\log\dfrac{P(w_1, w_2)}{ P(w_1)P(w_2) }
 $$
 
 Don't be intimidated by the math, the idea behind PMI is actually very intuitive: Not all cooccurrences are meaningful, some of them are just incidental. Some words cooccur not because they have any sort of dependency relation, but simply because one or both of the words are universally frequent, and may accidentally appear next to irrelevant words. The cooccurrence of two words should only be considered "meaningful" when the cooccurrence is not accidental. PMI compares the probability of two words cooccurring together with what this probability would be if those words were independent.
