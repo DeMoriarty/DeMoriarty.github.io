@@ -23,12 +23,14 @@ A very simple yet effective rescaling method, is logarithm. Logarithm preserves 
 Another simple method, is converting cooccurrence counts into binary values: 0 if no cooccurrence, 1 otherwise. At this point, the binary word vectors are equivalent to sets, and we can use Jaccard similarity to measure the similarity of two sets.
 
 The most popular and best performing rescaling method is Pointwise Mutual Information (PMI):
+
 $$
 \textrm{PMI}(w_1, w_2) = 
 \log\dfrac{P(w_1, w_2)}{ P(w_1)P(w_2) }
 $$
 
 Don't be intimidated by the math, the idea behind PMI is actually very intuitive: Not all cooccurrences are meaningful, some of them are just incidental. Some words cooccur not because they have any sort of dependency relation, but simply because one or both of the words are universally frequent, and may accidentally appear next to irrelevant words. The cooccurrence of two words should only be considered "meaningful" when the cooccurrence is not accidental. PMI compares the probability of two words cooccurring together with what this probability would be if those words were independent.
+
 $$
 \begin{align}
 	& P(w_1, w_2)  : \textrm{ what is the joint probability of $w_1$ and $w_2$ based on our observation} \\
@@ -36,6 +38,7 @@ $$
 \end{align}
 $$
 If $w_1$ and $w_2$ were completely independent, $P(w_1, w_2)$ should be equal to $P(w_1) P(w_2)$, so the ratio between them would be 1, and $log(1) = 0$. In short, PMI of irrelevant words will be 0. When $P(w_1, w_2) > P(w_1) P(w_2)$, the PMI will be positive, we say $w_1$ and $w_2$ are positively dependent. A negative PMI would imply negative dependency, which translates to "two words co-occurring less frequently than they would if they were independent". Negative PMI is harder to interpret and make use of compared to positive PMI, so in practice we usually only care about PPMI (Positive PMI):
+
 $$
 \textrm{PPMI}(w_1, w_2) = \max( \textrm{PMI} (w_1, w_2), 0)
 $$
