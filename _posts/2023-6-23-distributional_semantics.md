@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Introduction on Distributional Semantics
+title: Introduction to Distributional Semantics
 ---
 
 What makes *car* and *automobile*, *rage* and *anger* synonymous? A simple answer would be: they can be used interchangeably in many situations/contexts. This observation is where the intuition behind the **Distributional Hypothesis** came from: **words that occur in the same contexts tend to have similar meanings**. 
