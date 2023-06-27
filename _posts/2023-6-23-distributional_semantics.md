@@ -14,13 +14,25 @@ After doing this enough times, what we get is the conditional frequency distribu
 
 That's it! this is the most basic form of a distributional representation! The simplest use case of distributional representations, is finding words that are semantically similar to a given word. To do so, we can just compute the similarity between the vector of the given word with vectors of every other word in the vocabulary, and retrieve the words with largest similarity scores. 
 
-But if you try this on the count based (or frequency based) representations we got previously, it may not work very well. 
+But if you try to do this on the count based (or frequency based) representations we got previously, it may not work very well. 
 
-The reason is Zipf's law, it comes from the observation that in any language, there is a small set of words that occur extremely frequently, while the vast majority of the words appear very sparsely. For example, in any English text corpus, *the* may occur millions or billions of times, while something like *defibrillator* occur only a handful of times. Because of this, raw frequency distributions tend to be highly imbalanced, where few dimensions have extremely large values than the rest, and those few dimensions tend to "dominate" the result of similarity score calculation. This is why we need a **rescaling** step. 
+The reason is Zipf's law, which comes from the observation that in any language, there is a small set of words that occur extremely frequently, while the vast majority of the words appear very sparsely. For example, in any English text corpus, "the" may occur millions or billions of times, while something like "defibrillator" occur only a handful of times. Because of this, raw frequency distributions tend to be highly imbalanced, where few dimensions have extremely large values than the rest, and those few dimensions tend to "dominate" the result of similarity score calculation. This is why we need to balance out or penalize those highly frequent but not so meaningful dimensions, in a step called **rescaling**. 
 
-A very simple yet effective rescaling method, is logarithm. Logarithm preserves the sorted order of the vector dimensions, while squishing all the values into a much smaller range. It's basically a way of saying: frequent context words are only slightly more important than the less frequent ones. Because frequencies can be 0, and $$\log(0)$$ is undefined, we also need to add a small positive value to all the co-occurrence counts before computing logarithm. 
+A very simple yet effective rescaling method is logarithm. Logarithm preserves the sorted order (or rank) of the vector dimensions, while squishing all the values into a much smaller range. It's basically a way of saying: frequent context words are only slightly more important than the less frequent ones. Because frequencies can be 0, and $$\log(0)$$ is undefined, we need to add a small positive value to all the co-occurrence counts before computing the logarithm.
 
-Another simple method, is converting cooccurrence counts into binary values: 0 if no cooccurrence, 1 otherwise. At this point, the binary word vectors are equivalent to sets, and we can use Jaccard similarity to measure the similarity of two sets.
+Another simple method, is converting cooccurrence counts into binary values: 0 if no cooccurrence, 1 otherwise. At this point, the binary word vectors are equivalent to sets, and we can use Jaccard similarity to measure the similarity between them:
+
+$$
+\begin{align}
+	& \hat{v}_1 = \mathrm{binarize}(\vec{v}_1) \\
+	& \hat{v}_2 = \mathrm{binarize}(\vec{v}_1) \\
+	& D(w_1, w_2) = \dfrac{
+		\hat{v}_1 \land \hat{v}_1
+	}{
+		\hat{v}_1 \lor \hat{v}_2
+	}
+\end{align}
+$$
 
 The most popular and best performing rescaling method is Pointwise Mutual Information (PMI):
 
