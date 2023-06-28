@@ -20,6 +20,7 @@ One simple yet effective rescaling method involves using logarithms. Logarithms 
 Another straightforward approach is converting cooccurrence counts into binary values: 0 if there is no cooccurrence, and 1 if there is. At this point, the binary word vectors are equivalent to sets, and we can use Jaccard similarity to measure the similarity between them.
 
 The most popular and best performing rescaling method is Pointwise Mutual Information (PMI):
+
 $$
 \textrm{PMI}(w_1, w_2) = 
 \log\dfrac{P(w_1, w_2)}{ P(w_1)P(w_2) }
