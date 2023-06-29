@@ -6,11 +6,11 @@ title: A Developing Framework for Natural Language Systems
 In order to comprehend the human mind and create interpretable and reliable AI systems, I firmly believe in the necessity of a practical theory of natural language. While classical linguistic theories hold some truth and offer valuable insights into language's nature, they have not achieved significant success in the field of NLP. This can be primarily attributed to their neglect of a crucial aspect: language acquisition. The primary objective of this project is to develop a comprehensive framework for acquiring, understanding, and generating natural language, with particular emphasis on efficient learning and generalization from limited observations. By pursuing this goal, we aim to enhance our understanding of both machine and human intelligence, ultimately leading to the development of interpretable and robust AI systems.
 
 ## Guidelines and Principles
-1. everything should be as general and as minimalistic as possible.
-2. try not to make any exception or "special cases". Instead, make sure the framework is general enough to also have explanations for the exceptions.
-3. acquisition of language should be automatic and unsupervised, it should not require any human effort after the initial design/coding phase. it should not rely on external tools such as parsers, pos taggers or WordNet.
-4. never sacrifice interpretability for performance/accuracy. don't overly rely on black-box approaches.
-5. there are shortcuts, and they work, don't be tempted by them. pick the hard path and endure the suffering.
+1. Keep everything general and minimalistic.
+2. Avoid making exceptions or special cases; ensure the framework can explain them.
+3. Language acquisition should be automatic and unsupervised, without reliance on human effort or external tools.
+4. Prioritize interpretability over performance/accuracy.
+5. Avoid shortcuts and endure challenges for long-term benefits.
 
 ## Main Assumptions and Hypotheses
 1. Language is an interpretable system that can be modeled mechanistically.
