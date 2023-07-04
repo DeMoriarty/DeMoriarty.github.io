@@ -14,7 +14,7 @@ $$
 P(\texttt{states} \mid \texttt{united} ) = \dfrac{
 	C(\texttt{united states}) 
 }{
-	C(\texttt{states})
+	C(\texttt{united})
 }
 $$
 
