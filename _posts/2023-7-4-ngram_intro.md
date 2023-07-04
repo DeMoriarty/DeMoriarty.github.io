@@ -11,10 +11,10 @@ The fundamental assumption underpinning N-gram models is the Markov assumption, 
 To understand N-gram models, we first need to answer the question: How do we calculate the probability of the word "states" following "united"? A straightforward solution is to count how many times "united states" appears in a text corpus and divide this by the total number of times "united" is found. This is tantamount to asking, "What percentage of the words that follow 'united' are 'states'?". This is known as the Maximum Likelihood Estimation (MLE) of conditional probability, which is represented as follows:
 
 $$
-P(\textrm{states} | \textrm{united} ) = \dfrac{
-	C(\textrm{united states}) 
+P(\texttt{states} \mid \texttt{united} ) = \dfrac{
+	C(\texttt{united states}) 
 }{
-	C(\textrm{states})
+	C(\texttt{states})
 }
 $$
 
