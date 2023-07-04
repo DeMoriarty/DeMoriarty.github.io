@@ -46,4 +46,4 @@ N-gram models are a good starting point, but they do have noticeable shortcoming
 
 However, the existing similarity-based methods are only applicable to bigram models. In the following post, I will delve deeper into the existing similarity-based bigram model, and introduce an improved algorithm that can be applied to n-grams of any order.
 
-I strongly recommend [this article from stanford](https://web.stanford.edu/~jurafsky/slp3/3.pdf), which has very detailed explanations about N-gram language models and some of the methods I've mentioned.
+I highly suggest [this article from Stanford](https://web.stanford.edu/~jurafsky/slp3/3.pdf). It provides thorough explanations about N-gram language models and covers some of the methods I've discussed.
