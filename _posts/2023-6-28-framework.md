@@ -25,6 +25,7 @@ In order to comprehend the human mind and create interpretable and reliable AI s
 	2. meanings of the constituents of the novel form
 	3. meanings of other memorized forms that can be constituted from the constituents of the novel form.
 	4. context surrounding the novel form 
-	This process of estimating meaning involves compositionality, which will be further discussed later posts.
+
+This process of estimating meaning involves compositionality, which will be further discussed later posts.
 
 To be continued...
