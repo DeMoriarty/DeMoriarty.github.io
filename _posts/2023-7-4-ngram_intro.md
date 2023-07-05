@@ -28,7 +28,7 @@ P(w_i | w_{i-n+1:i-1}) = \dfrac{
 }
 $$
 
-N-gram models are a good starting point, but they do have noticeable shortcomings. The main issue is data sparsity, which means for larger 'n' values, the likelihood of finding an unknown N-gram in the test data grows, leading to inaccurate predictions. Adding more training data can help to some extent, but the benefits get smaller each time. Plus, sometimes, we just don't have enough training data. Therefore, we need to incorporate other techniques to improve the model.
+N-gram models are a good starting point, but they do have noticeable shortcomings. The main issue is data sparsity, which means for larger 'n' values, the likelihood of finding an unknown N-gram in the test data grows, leading to inaccurate predictions. Adding more training data can help to some extent, but the benefits get smaller each time. Plus, sometimes, we just don't have enough training data. Therefore, we need to incorporate some generalization techniques to improve the model. Another problem is that the text is treated merely as a linear sequence of words, totally ignoring the language's syntactic structure. We will discuss this second issue in more detail in future posts.
 
 ## Generalization techniques
 
