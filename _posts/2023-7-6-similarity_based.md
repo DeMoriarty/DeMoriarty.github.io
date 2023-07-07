@@ -29,6 +29,7 @@ P_{r}(w_2 \mid w_1) = \gamma P_{MLE}(w_2) + (1 - \gamma)P_{SIM}(w_2 \mid w_1)
 $$
 
 The choice of the similarity measure and rescaling function is another important design decision. The authors used negative exponential KL divergence in their language modeling experiments:
+
 $$
 D( w_1 \parallel w_1^ \prime ) = \sum_{w_2 \in V }
 P(w_2 \mid w_1) \log 
@@ -71,7 +72,7 @@ $$
 But functions like $$S(w_{i-n+1 : i-1})$$ and $$W(w_{i-n+1 : i-1}^ \prime, w_{i-n+1 : i-1})$$ need us to clearly define what it means for two N-grams to be similar.  This plunges us into the deep end of compositionality. Here, I propose three candidates:
 
 ### 1. ### Possible Definitions of N-gram Similarity
-#### Mean of Constituents (MoC)
+**Mean of Constituents**
 As the name suggests, the similarity of two N-grams is defined as the average distributional similarity of each pair of words in both N-grams. For example:
 
 $$
@@ -81,9 +82,10 @@ $$
 }
 {2}
 $$
+
 This works well in some cases, but not when N-grams are non-compositional. For instance, it fails to capture the similarity between $$\texttt{best man}$$ and $$\texttt{groom's person}$$, because $$\texttt{best}$$ and $$\texttt{groom's}$$ aren't really synonymous.
 
-#### Additive Composition and Multiplicative Composition
+**Additive Composition and Multiplicative Composition**
 Additive or multiplicative combination of vectors is a simple yet effective method in Compositional Distributional Semantics. The suggestion is that the vector representation of a phrase can be created by merely adding or multiplying the vectors of its individual words. Using this method, we can create vector representations for each N-gram and simply treat them as word vectors. For example:
 
 $$
@@ -100,14 +102,14 @@ $$
 
 The main issue with this method is that it disregards word order. For instance, $$\texttt{car company}$$ and $$\texttt{company car}$$ would have identical representations. Moreover, like the Mean of Constituent, Additive Composition also fails with non-compositional examples.
 
-#### N-grams as Words
+**N-grams as Words**
 This approach is in stark contrast to the previous two. It essentially treats all N-grams as words, and directly apply distributional semantics approaches to N-grams, while ignoring all information from their constituents. In theory, using this method, N-grams can be directly compared to words or N-grams of any size.
 
 $$
 \begin{align}
-	&\mathrm{sim}( \texttt{good man}, \texttt{great guy} ) = \mathrm{sim}( \texttt{good\_man}, \texttt{great\_guy} )
+	&\mathrm{sim}( \texttt{good man}, \texttt{great guy} ) = \mathrm{sim}( \texttt{good\\_man}, \texttt{great\_guy} )
 \\
-	&\mathrm{sim}( \texttt{united kingdom}, \texttt{Britain} ) = \mathrm{sim}( \texttt{united\_kingdom}, \texttt{Britain} )
+	&\mathrm{sim}( \texttt{united kingdom}, \texttt{Britain} ) = \mathrm{sim}( \texttt{united_kingdom}, \texttt{Britain} )
 	\end{align}
 $$
 
@@ -124,13 +126,13 @@ $$
 }
 $$
 
-#### Log of Laplace
+**Log of Laplace**
 
 $$
 (\vec{v}_a)_i = \log( C(a, V_i) + 1)
 $$
 
-#### Positive pointwise mutual information (PPMI)
+**Positive pointwise mutual information (PPMI)**
 
 $$
 (\vec{v}_a)_i = 
