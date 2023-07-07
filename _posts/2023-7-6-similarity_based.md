@@ -107,7 +107,7 @@ This approach is in stark contrast to the previous two. It essentially treats al
 
 $$
 \begin{align}
-	&\mathrm{sim}( \texttt{good man}, \texttt{great guy} ) = \mathrm{sim}( \texttt{good\\_man}, \texttt{great\_guy} )
+	&\mathrm{sim}( \texttt{good man}, \texttt{great guy} ) = \mathrm{sim}( \texttt{good_man}, \texttt{great_guy} )
 \\
 	&\mathrm{sim}( \texttt{united kingdom}, \texttt{Britain} ) = \mathrm{sim}( \texttt{united_kingdom}, \texttt{Britain} )
 	\end{align}
