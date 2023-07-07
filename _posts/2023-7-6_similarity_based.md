@@ -1,3 +1,8 @@
+---
+layout: post
+title: Similarity-based Generalization in N-gram models
+---
+
 If you're unfamiliar with N-gram models, I suggest you to read my [introduction to N-gram language models](./2023-7-4-ngram_intro.md) before continuing.
 
 Using a finite set of words, we can produce infinite number of phrases and sentences. As N increases, the number of possible N-grams also increases exponentially, but the amount of N-grams we can observe from a finite text corpus is always linear to the size of the corpus. This is the data sparsity problem, which is the most fundamental problem in N-gram language modeling. In the previous post, I've mentioned many approaches that try to handle this issue, and *Similarity-based Generalization* is in my opinion the most important one of them. This idea which was originally proposed for bigram models, comes from the intuition that, when two words are semantically similar, the distribution of the words that proceed them are also similar. 
