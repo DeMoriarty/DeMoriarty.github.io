@@ -14,18 +14,80 @@ An interesting question here is how we decide which words are similar. The answe
 ## The case for bigrams
 The similarity-based bigram model (Dagan et al., 1998) has three key components:
 
-1. $$S(w_1)$$: a set of words that are similar to the context word $$w_1$$; 
-2. $$W(w_1^ \prime, w_1)$$: the rescaled similarity score between $$w_1$$ and  $$w_1^ \prime$$, where $$w_1^ \prime$$ is a member of $$S(w_1)$$;
-3. $$P_{MLE}( w_2 \mid w_1 )$$ and $$P_{MLE}( w_2 )$$: the Maximum Likelihood Estimation (MLE) of the probability of $$w_2$$ given $$w_1$$, as well as the unigram probability of $$w_2$$
+1. $$S(w_1)$$: a set of words that are similar to the context word $$w_1$$. $$S(w_1)$$ contains $$k$$ elements, where $$k$$ is a hyperparameter; 
+2. $$W(w_1^ \prime, w_1)$$: the rescaled (dis)similarity score between $$w_1$$ and  $$w_1^ \prime$$, where $$w_1^ \prime$$ is a member of $$S(w_1)$$;
+3. $$P_{MLE}(w_2 \mid w_1)$$: the Maximum Likelihood probability estimation of $$w_2$$ occurring after $w_1$;
+4. $$P_{SIM}(w_2 \mid w_1)$$: an interpolation model that mixes the $$P_{MLE}$$ of the next word given each word in $$S(w_1)$$ as context;
+5. $$P_d(w_2 \mid w_1)$$: a discounted bigram model such as the Good-Turing model;
+6. $$P_r(w_2 \mid w_1)$$: an interpolation model that mixes a unigram model $$P_{MLE}(w_2)$$ with $$P_{SIM}$$.
 
-The final probability estimate ($$P_{r}$$) comes from the interpolation of a unigram model $$P_{MLE}(w_2)$$ and a similarity-based model $$P_{SIM}(w_2 \mid w_1)$$, where the interpolation is controlled by a hyperparameter $$\gamma$$ . $$P_{SIM}(w_2 \mid w_1)$$ is computed by averaging $$P_{MLE}(w_2 \mid w_1^\prime)$$ of every $$w_1^\prime$$ in $$S(w_1)$$, with weights determined by rescaling and normalizing the similarity scores of $$w_1^\prime$$ and $$w_1$$.
+At the very top, the similarity-based bigram model is simply a backoff model, similar to the Katz backoff (Katz, 1987). In a backoff model, when a given bigram is seen in the corpus, it simply uses the ML probabilities, but when the bigram is unseen, it uses the probability estimates from a supplementary model. But unlike Katz, where the supplementary model is a lower order model, the similarity-based bigram model backs off to another interpolation model ($$P_r$$):
 
 $$
-P_{SIM}(w_2 \mid w_1) = \sum_{w_1^ \prime \in S(w_1)}P_{MLE}(w_2 \mid w_1^ \prime)\dfrac{W(w_1, w_1^ \prime)}{\sum_{w_1^ \prime \in S(w_1)}W(w_1, w_1^ \prime)}
+\begin{equation}
+	\hat{P}(w_2 \mid w_1) = 
+	\left\{
+	\begin{array}{ll}
+		P_d(w_2 \mid w_1) &\mathrm{if} \; C(w_1, w_2) > 0  
+		\\
+		\alpha(w_1) P_r(w_2 \mid w_1) &\mathrm{otherwise}
+	\end{array}
+	\right.
+\end{equation}
 $$
 
+The interpolation model $$P_{r}$$ is basically a mixture of a unigram model $$P_{MLE}(w_2)$$ and a similarity-based model $$P_{SIM}(w_2 \mid w_1)$$, where the interpolation is controlled by a hyperparameter $$\gamma$$:
+
 $$
-P_{r}(w_2 \mid w_1) = \gamma P_{MLE}(w_2) + (1 - \gamma)P_{SIM}(w_2 \mid w_1)
+\begin{equation}
+	P_{r}(w_2 \mid w_1) = \gamma P_{MLE}(w_2) + (1 - \gamma)P_{SIM}(w_2 \mid w_1)
+\end{equation}
+$$
+
+$$P_{SIM}(w_2 \mid w_1)$$ is computed by averaging $$P_{MLE}(w_2 \mid w_1^\prime)$$ of every $$w_1^\prime$ in $$S(w_1)$$, with weights determined by rescaling and normalizing the similarity scores of $$w_1^\prime$$ and $$w_1$$:
+
+$$
+\begin{equation}
+	P_{SIM}(w_2 \mid w_1) = \sum_{w_1^ \prime \in S(w_1)}P_{MLE}(w_2 \mid w_1^ \prime)\dfrac{W(w_1, w_1^ \prime)}{\sum_{w_1^ \prime \in S(w_1)}W(w_1, w_1^ \prime)}
+\end{equation}
+$$
+
+$$P_d(w_2 \mid w_1)$$ is a discounted bigram model, and similar to Katz, the Good-Turing model was chosen. In the Good-Turing model, the actual counts of bigrams are replaced with adjusted counts during the probability estimation:
+
+$$
+\begin{equation}
+	P_d(w_2 \mid w_1) = \dfrac{
+		C^{*}(w_1, w_2)
+	}{
+		C(w_1)
+	}
+\end{equation}
+$$
+
+The calculation of the adjusted count $$C^{*}$$ involves a unique concept: frequency of frequencies. $$N_c$$ represents the number of unique bigrams in the corpus that have frequency $$c$$. $$C^{*}$$ is computed as:
+
+$$
+\begin{equation}
+	C^{*}(w_1, w_2) = 
+	(C(w_1, w_2) + 1)
+	\dfrac{
+		N_{C(w_1, w_2) + 1}
+	}{
+		N_{C(w_1, w_2)}
+	}
+\end{equation}
+$$
+
+The parameter $$\alpha$$ used in the calculation of $$\hat{P}(w_2 \mid w_1)$$ is obtained using the following formula:
+
+$$
+\begin{equation}
+\alpha(w_1) = \dfrac{
+	1 - \sum_{w_2 : C(w_1, w_2) > 0} P_d(w_2 \mid w_1)
+}{
+	\sum_{w_2 : C(w_1, w_2) =>= 0} P_r(w_2 \mid w_1)
+}
+\end{equation}
 $$
 
 The choice of the similarity measure and rescaling function is another important design decision. The authors used negative exponential KL divergence in their language modeling experiments:
@@ -46,74 +108,7 @@ $$
 W(w_1, w_1 ^ \prime) = 10 ^ {-\beta D(w_1 \parallel w_1^ \prime) }
 $$
 
-here, $$V$$ refers the vocabulary, which is the collection of all unique words in the text corpus, and $\beta$ is another hyperparameter of the model.
-
-In their experiments, this model achieved 20% improvement in perplexity over Katz backoff model (Katz, 1987). 
-
-## Extending to higher order N-grams
-
-The interpolative nature of the bigram model can easily be extended to arbitrary order N-grams in a recursive manner. The N-gram model's final probability estimation ($$P_r$$) is an interpolation between the similarity-based model ($$P_{SIM}$$) of the current order and the estimated probability ($P_r$) of the preceding (N-1)th order. In the base case of a unigram model, $$P_r$$ is simply equal to the Maximum Likelihood Estimation ($$P_{MLE}$$):
-
-$$P_{r}(w_i \mid w_{i-n+1 : i-1}) = \gamma P_r(w_i \mid w_{i-n+2 : i-1}) + (1-\gamma)P_{SIM}(w_i \mid w_{i-n+1 : i-1})$$
-
-$$P_{r}(w_i) = P_{MLE}(w_i)$$
-
-The main challenge lies in the calculation of $$P_{SIM}$$. As a first step, we could extend the equation for bigrams to N-grams:
-
-$$
-\begin{gather}
-	P_{SIM}(w_{i} \mid w_{i-n+1 : i-1}) 
-	= \sum_{w_{i-n+1 : i-1}^ \prime \in S(w_{i-n+1 : i-1})}P_{MLE}(w_{i} \mid w_{i-n+1 : i-1}^ \prime)
-	\dfrac {W(w_{i-n+1 : i-1}^ \prime, w_{i-n+1 : i-1})}
-	{\sum_{w_{i-n+1 : i-1}^ \prime \in S(w_{i-n+1 : i-1})}W(w_{i-n+1 : i-1}^ \prime, w_{i-n+1 : i-1})}
-\end{gather}
-$$
-
-But functions like $$S(w_{i-n+1 : i-1})$$ and $$W(w_{i-n+1 : i-1}^ \prime, w_{i-n+1 : i-1})$$ need us to clearly define what it means for two N-grams to be similar.  This plunges us into the deep end of compositionality. Here, I propose three candidates:
-
-### 1. ### Possible Definitions of N-gram Similarity
-**Mean of Constituents**
-As the name suggests, the similarity of two N-grams is defined as the average distributional similarity of each pair of words in both N-grams. For example:
-
-$$
-\mathrm{sim}( \texttt{good man}, \texttt{great guy} ) = 
-\dfrac{
-	\mathrm{sim}( \texttt{good}, \texttt{great}) + \mathrm{sim}( \texttt{man}, \texttt{guy})
-}
-{2}
-$$
-
-This works well in some cases, but not when N-grams are non-compositional. For instance, it fails to capture the similarity between $$\texttt{best man}$$ and $$\texttt{groom's person}$$, because $$\texttt{best}$$ and $$\texttt{groom's}$$ aren't really synonymous.
-
-**Additive Composition and Multiplicative Composition**
-Additive or multiplicative combination of vectors is a simple yet effective method in Compositional Distributional Semantics. The suggestion is that the vector representation of a phrase can be created by merely adding or multiplying the vectors of its individual words. Using this method, we can create vector representations for each N-gram and simply treat them as word vectors. For example:
-
-$$
-\mathrm{sim}( \texttt{good man}, \texttt{great guy} ) = 
-\mathrm{sim}( \texttt{good} + \texttt{man}, \texttt{great} + \texttt{guy} )
-$$
-
-or 
-
-$$
-\mathrm{sim}( \texttt{good man}, \texttt{great guy} ) = 
-\mathrm{sim}( \texttt{good} \odot \texttt{man}, \texttt{great} \odot \texttt{guy} )
-$$
-
-The main issue with this method is that it disregards word order. For instance, $$\texttt{car company}$$ and $$\texttt{company car}$$ would have identical representations. Moreover, like the Mean of Constituent, Additive Composition also fails with non-compositional examples.
-
-**N-grams as Words**
-This approach is in stark contrast to the previous two. It essentially treats all N-grams as words, and directly apply distributional semantics approaches to N-grams, while ignoring all information from their constituents. In theory, using this method, N-grams can be directly compared to words or N-grams of any size.
-
-$$
-\begin{align}
-	&\mathrm{sim}( \texttt{good man}, \texttt{great guy} ) = \mathrm{sim}( \texttt{good_man}, \texttt{great_guy} )
-\\
-	&\mathrm{sim}( \texttt{united kingdom}, \texttt{Britain} ) = \mathrm{sim}( \texttt{united_kingdom}, \texttt{Britain} )
-	\end{align}
-$$
-
-The weakness of this approach is rather obvious: it ignores compositionality altogether, and it is susceptible to data sparsity. 
+here, $$V$$ refers the vocabulary, which is the collection of all unique words in the text corpus, and $$\beta$$ is another hyperparameter of the model.
 
 ### Selecting the Similarity Metric
 In addition to the negative exponential of KL divergence used in the original paper, we will also explore the use of cosine similarity with two different distributional modeling approaches.
@@ -148,4 +143,35 @@ $$
 
 Here, $$(\vec{v}_a)_i$$ denotes the i'th element of the vector $$\vec{v}_a$$, and similarly $$V_i$$ refers to the i'th word in the vocabulary.
 
-to be continued...
+In their experiments, the original model achieved 20% improvement in perplexity over Katz backoff model. However, in the following experiments, we will see that if we discard the backoff model, and only use the interpolation model $P_r$ as the final estimation, the performance of the model will be even better.
+
+## Bigram Language Modeling Experiments
+Let's test out the above mentioned approaches with some language modeling experiments on Penn treebank (PTB) and wikitext103 datasets. PTB contains around a million words with trainset and test set combined, while Wikitext103 is roughly 100 times larger than that. We will use a vocabulary size of 5000 for both datasets, containing most frequent words. 
+
+### baselines
+1. Laplace smoothing:
+
+$$
+\begin{equation}
+	P_d(w_2 \mid w_1) = \dfrac{
+		C(w_1, w_2) + 1
+	}{
+		C(w_1)
+	}
+\end{equation}
+$$
+
+2. Good-Turing:
+Originally proposed in [this paper](https://www.jstor.org/stable/2333344) and explained in [these slides](https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1086/handouts/cs224n-lecture2-language-models-slides.pdf).
+
+3. Katz backoff:
+Originally proposed in [this paper](https://www.researchgate.net/publication/2572004_Estimation_of_probabilities_from_Sparse_data_for_the_language_model_component_of_a_speech_recognizer) and explained in [these slides](https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1086/handouts/cs224n-lecture2-language-models-slides.pdf)
+
+4. Interpolated Kneser-Ney:
+Originally proposed in [this paper](https://www-i6.informatik.rwth-aachen.de/publications/download/951/Kneser-ICASSP-1995.pdf) and explained in [these slides]([https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1086/handouts/cs224n-lecture2-language-models-slides.pdf](https://www.cse.iitb.ac.in/~pjyothi/cs753/slides/lecture10.pdf)https://www.cse.iitb.ac.in/~pjyothi/cs753/slides/lecture10.pdf) and [this paper](https://arxiv.org/pdf/cs/0108005.pdf)
+
+5. Modified Kneser-Ney:
+Originally proposed in [this paper](https://people.eecs.berkeley.edu/~klein/cs294-5/chen_goodman.pdf) and explained in [this blog post](http://www.foldl.me/2014/kneser-ney-smoothing/)
+
+
+
