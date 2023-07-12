@@ -25,7 +25,7 @@ $$
 
 But functions like $$S(w_{i-n+1 : i-1})$$ and $$W(w_{i-n+1 : i-1}^ \prime, w_{i-n+1 : i-1})$$ need us to clearly define what it means for two N-grams to be similar.  This plunges us into the deep end of compositionality. Here, I propose three candidates:
 
-### 1. ### Possible Definitions of N-gram Similarity
+### Possible Definitions of N-gram Similarity
 **Mean of Constituents**
 As the name suggests, the similarity of two N-grams is defined as the average distributional similarity of each pair of words in both N-grams. For example:
 
@@ -68,3 +68,39 @@ $$
 $$
 
 The weakness of this approach is rather obvious: it ignores compositionality altogether, and it is susceptible to data sparsity. 
+
+
+### Selecting the distributional method
+In addition to the negative exponential of KL divergence used in the original paper, we will also explore the use of cosine similarity with two different distributional modeling approaches.
+
+$$
+\mathrm{sim}(a, b) = \dfrac{
+	\vec{v}_a \cdot \vec{v}_b
+}{
+	\| \vec{v}_a \| \| \vec{v}_b \|
+}
+$$
+
+**Log of Laplace**
+
+$$
+(\vec{v}_a)_i = \log( C(a, V_i) + 1)
+$$
+
+**Positive pointwise mutual information (PPMI)**
+
+$$
+(\vec{v}_a)_i = 
+\max\left(0,
+\log 
+\dfrac{
+	P_{MLE}(a, V_i)
+}{
+	P_{MLE}(a) P_{MLE}(V_i)
+}
+\right)
+$$
+
+Here, $$(\vec{v}_a)_i$$ denotes the i'th element of the vector $$\vec{v}_a$$, and similarly $$V_i$$ refers to the i'th word in the vocabulary.
+
+In their experiments, the original model achieved 20% improvement in perplexity over Katz backoff model. However, in the following experiments, we will see that if we discard the backoff model, and only use the interpolation model $P_r$ as the final estimation, the performance of the model will be even better.
