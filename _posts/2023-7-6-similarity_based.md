@@ -165,13 +165,13 @@ $$
 Originally proposed in [this paper](https://www.jstor.org/stable/2333344) and explained in [these slides](https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1086/handouts/cs224n-lecture2-language-models-slides.pdf).
 
 3. Katz backoff:
-Originally proposed in [this paper](https://www.researchgate.net/publication/2572004_Estimation_of_probabilities_from_Sparse_data_for_the_language_model_component_of_a_speech_recognizer) and explained in [these slides](https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1086/handouts/cs224n-lecture2-language-models-slides.pdf)
+Originally proposed in [this paper](https://www.researchgate.net/publication/2572004_Estimation_of_probabilities_from_Sparse_data_for_the_language_model_component_of_a_speech_recognizer) and explained in [these slides](https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1086/handouts/cs224n-lecture2-language-models-slides.pdf).
 
 4. Interpolated Kneser-Ney:
-Originally proposed in [this paper](https://www-i6.informatik.rwth-aachen.de/publications/download/951/Kneser-ICASSP-1995.pdf) and explained in [these slides]([https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1086/handouts/cs224n-lecture2-language-models-slides.pdf](https://www.cse.iitb.ac.in/~pjyothi/cs753/slides/lecture10.pdf)https://www.cse.iitb.ac.in/~pjyothi/cs753/slides/lecture10.pdf) and [this paper](https://arxiv.org/pdf/cs/0108005.pdf)
+Originally proposed in [this paper](https://www-i6.informatik.rwth-aachen.de/publications/download/951/Kneser-ICASSP-1995.pdf) and explained in [these slides](https://www.cse.iitb.ac.in/~pjyothi/cs753/slides/lecture10.pdf) and [this paper](https://arxiv.org/pdf/cs/0108005.pdf).
 
 5. Modified Kneser-Ney:
-Originally proposed in [this paper](https://people.eecs.berkeley.edu/~klein/cs294-5/chen_goodman.pdf) and explained in [this blog post](http://www.foldl.me/2014/kneser-ney-smoothing/)
+Originally proposed in [this paper](https://people.eecs.berkeley.edu/~klein/cs294-5/chen_goodman.pdf) and explained in [this blog post](http://www.foldl.me/2014/kneser-ney-smoothing/).
 
 
 
