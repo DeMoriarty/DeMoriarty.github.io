@@ -120,7 +120,7 @@ $$
 \end{equation}
 $$
 
-In the improved model, $$\gamma$$ is dynamically calculated using $$C$$:
+In the improved model, $$\gamma$$ is determined dynamically depending on $$C(w_1, w_2)$$:
 
 $$
 \gamma = \dfrac{1}{
@@ -128,7 +128,7 @@ $$
 }
 $$
 
-This introduces another free parameter $$\alpha$$.
+This means, when $$C(w_1, w_2)$$ is equal to 0, $$P_r$$ solely depends $$P_{MLE}(w_2)$$. If the bigram ($$w_1, w_2$$) is more frequent, $$P_{SIM}$$ will have more contribution towards the final probability estimate. Note that this step introduces another free parameter $$\alpha$$.
 
 ### The final model
 
