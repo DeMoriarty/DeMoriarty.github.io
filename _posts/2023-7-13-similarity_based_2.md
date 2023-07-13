@@ -34,7 +34,7 @@ $$
 
 ### Different distributional similarity methods
 
-In addition to the negative exponential of KL divergence used in the original paper, we will also explore the use of cosine similarity with following two distributional modeling methods:
+Instead of the negative exponential of KL divergence used in the original paper, we will explore the use of cosine similarity with following two distributional modeling methods:
 
 **Log of Laplace**
 
@@ -94,7 +94,8 @@ $$
 Instead, now we will use similar words to estimate counts, rather than probabilities.
 
 $$
-\tilde{C}(w_2 w_1) = \sum_{w_1^ \prime \in S(w_1)}c_{w_2 w_1^ \prime}
+\tilde{C}(w_2 w_1) = \sum_{w_1^ \prime \in S(w_1)}
+C(w_2 w_1^ \prime)
 \dfrac{
 	W(w_1^ \prime, w_1)
 }{
@@ -111,7 +112,7 @@ $$
 
 ### Dynamic calculation of the interpolation parameter $$\gamma$$
 
-$$\gamma$$ is a parameter that's used to determine the "importance" of the unigram and bigram models during the calculation $$P_r$$. It's a free parameter of the model that's chosen based on some form of search.
+$$\gamma$$ is a parameter that's used to determine the contribution of the unigram and bigram models during the calculation $$P_r$$. It's a free parameter of the model that's chosen through some form of search.
 
 $$
 \begin{equation}
@@ -119,7 +120,7 @@ $$
 \end{equation}
 $$
 
-In the improved model, $$\gamma$$ is dynamically calculated using $$\tilde{c}$$:
+In the improved model, $$\gamma$$ is dynamically calculated using $$C$$:
 
 $$
 \gamma = \dfrac{1}{
@@ -128,3 +129,67 @@ $$
 $$
 
 This introduces another free parameter $$\alpha$$.
+
+### The final model
+
+1. 
+
+$$
+\begin{equation}
+	\hat{P}(w_2 \mid w_1) = P_{r}(w_2 \mid w_1) = \gamma P_{MLE}(w_2) + (1 - \gamma)P_{SIM}(w_2 \mid w_1)
+\end{equation}
+$$
+
+2.
+$$
+\gamma = \dfrac{1}{
+	\alpha C(w_1, w_2) + 1
+}
+$$
+
+3.
+
+$$
+P_{SIM}(w_2 \mid w_1) = 
+\dfrac
+{\tilde{C}(w_2 w_1)}
+{\sum_{w_1^ \prime \in S(w_1)} \tilde{C}(w_2 w_1^\prime)}
+$$
+
+4.
+
+$$
+\tilde{C}(w_2 w_1) = \sum_{w_1^ \prime \in S(w_1)}
+C(w_2 w_1^ \prime)
+\dfrac{
+	W(w_1^ \prime, w_1)
+}{
+	\sum_{w_1^ \prime \in S(w_1)}W(w_1^ \prime, w_1)
+}
+$$
+
+5.
+
+$$
+\begin{equation}
+	W(w_1, w_1 ^ \prime) = e^{ \beta D(w_1, w_1 ^ \prime )}
+\end{equation}
+$$
+
+6.
+
+$$
+D(w_1, w_1 ^ \prime) = 
+\dfrac
+{
+	\vec{v}_{w_1} \cdot \vec{v}_{w_1 ^ \prime}
+}
+{ 
+	\| \vec{v}_{w_1} \|  \| \vec{v}_{w_1 ^ \prime} \| 
+}
+$$
+
+7.
+
+
+
