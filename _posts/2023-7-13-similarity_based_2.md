@@ -71,7 +71,7 @@ D(w_1, w_1 ^ \prime) =
 }
 $$
 
-Because the similarity metric has changed to cosine similarity, the rescale function $$W$$ should also change correspondingly. I'll choose exponential function to be the rescaling function. 
+Because the similarity metric has changed to cosine similarity, the rescale function $$W$$ should also change correspondingly. Exponential function is chosen in the improved model. 
 
 $$
 \begin{equation}
@@ -94,7 +94,7 @@ $$
 Instead, now we will use similar words to estimate counts, rather than probabilities.
 
 $$
-\tilde{c}_{w_2 w_1} = \sum_{w_1^ \prime \in S(w_1)}c_{w_2 w_1^ \prime}
+\tilde{C}(w_2 w_1) = \sum_{w_1^ \prime \in S(w_1)}c_{w_2 w_1^ \prime}
 \dfrac{
 	W(w_1^ \prime, w_1)
 }{
@@ -105,8 +105,8 @@ $$
 $$
 P_{SIM}(w_2 \mid w_1) = 
 \dfrac
-{\tilde{c}_{w_2 w_1}}
-{\sum_{w_1^ \prime \in S(w_1)} \tilde{c}_{w_2 w_1^\prime}}
+{\tilde{C}(w_2 w_1)}
+{\sum_{w_1^ \prime \in S(w_1)} \tilde{C}(w_2 w_1^\prime)}
 $$
 
 ### Dynamic calculation of the interpolation parameter $$\gamma$$
