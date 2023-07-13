@@ -141,6 +141,7 @@ Originally proposed in [this paper](https://people.eecs.berkeley.edu/~klein/cs29
 ### Results
 **perplexity on PTB**
 
+{:class="table table-bordered"}
 | model                                                             | PPL (test) |
 | ----------------------------------------------------------------- | ---------- |
 | Laplace                                                           | 335.5      |
@@ -152,6 +153,7 @@ Originally proposed in [this paper](https://people.eecs.berkeley.edu/~klein/cs29
 
 **perplexity on Wikitext103**
 
+{:class="table table-bordered"}
 | model                                                           | PPL (test) |
 | --------------------------------------------------------------- | ---------- |
 | Laplace                                                         | 86.2       |
