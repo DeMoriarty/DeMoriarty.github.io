@@ -83,8 +83,6 @@ Note that, in combination with the normalization during the calculation of $P_{S
 
 ### Using similar words to estimate counts instead of probabilties
 
-$$P_{SIM}$$ 
-
 Originally, $$P_{SIM}$$ was calculated as the weighted average of the $$P_{MLE}$$ of each similar word.
 
 $$
@@ -104,3 +102,29 @@ $$
 }
 $$
 
+$$
+P_{SIM}(w_2 \mid w_1) = 
+\dfrac
+{\tilde{c}_{w_2 w_1}}
+{\sum_{w_1^ \prime \in S(w_1)} \tilde{c}_{w_2 w_1^\prime}}
+$$
+
+### Dynamic calculation of the interpolation parameter $$\gamma$$
+
+$$\gamma$$ is a parameter that's used to determine the "importance" of the unigram and bigram models during the calculation $$P_r$$. It's a free parameter of the model that's chosen based on some form of search.
+
+$$
+\begin{equation}
+	P_{r}(w_2 \mid w_1) = \gamma P_{MLE}(w_2) + (1 - \gamma)P_{SIM}(w_2 \mid w_1)
+\end{equation}
+$$
+
+In the improved model, $$\gamma$$ is dynamically calculated using $$\tilde{c}$$:
+
+$$
+\gamma = \dfrac{1}{
+	\alpha C(w_1, w_2) + 1
+}
+$$
+
+This introduces another free parameter $$\alpha$$.
