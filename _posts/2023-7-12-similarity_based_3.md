@@ -102,5 +102,3 @@ $$
 $$
 
 Here, $$(\vec{v}_a)_i$$ denotes the i'th element of the vector $$\vec{v}_a$$, and similarly $$V_i$$ refers to the i'th word in the vocabulary.
-
-In their experiments, the original model achieved 20% improvement in perplexity over Katz backoff model. However, in the following experiments, we will see that if we discard the backoff model, and only use the interpolation model $P_r$ as the final estimation, the performance of the model will be even better.
