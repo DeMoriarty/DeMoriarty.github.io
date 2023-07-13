@@ -110,45 +110,10 @@ $$
 
 here, $$V$$ refers the vocabulary, which is the collection of all unique words in the text corpus, and $$\beta$$ is another hyperparameter of the model.
 
-### Selecting the Similarity Metric
-In addition to the negative exponential of KL divergence used in the original paper, we will also explore the use of cosine similarity with two different distributional modeling approaches.
+## Initial Experiments
+Now let's compare the above mentioned approach with some baseline models on language modeling. We will be using Penn treebank (PTB) and Wikitext103 datasets. PTB contains around a million words with trainset and test set combined, while Wikitext103 is roughly 100 times larger than that. We will use vocabularies of size 5000 for both datasets, containing the most frequent words. The best performing hyperparameters for each model are selected via grid search.
 
-$$
-\mathrm{sim}(a, b) = \dfrac{
-	\vec{v}_a \cdot \vec{v}_b
-}{
-	\| \vec{v}_a \| \| \vec{v}_b \|
-}
-$$
-
-**Log of Laplace**
-
-$$
-(\vec{v}_a)_i = \log( C(a, V_i) + 1)
-$$
-
-**Positive pointwise mutual information (PPMI)**
-
-$$
-(\vec{v}_a)_i = 
-\max\left(0,
-\log 
-\dfrac{
-	P_{MLE}(a, V_i)
-}{
-	P_{MLE}(a) P_{MLE}(V_i)
-}
-\right)
-$$
-
-Here, $$(\vec{v}_a)_i$$ denotes the i'th element of the vector $$\vec{v}_a$$, and similarly $$V_i$$ refers to the i'th word in the vocabulary.
-
-In their experiments, the original model achieved 20% improvement in perplexity over Katz backoff model. However, in the following experiments, we will see that if we discard the backoff model, and only use the interpolation model $P_r$ as the final estimation, the performance of the model will be even better.
-
-## Bigram Language Modeling Experiments
-Let's test out the above mentioned approaches with some language modeling experiments on Penn treebank (PTB) and wikitext103 datasets. PTB contains around a million words with trainset and test set combined, while Wikitext103 is roughly 100 times larger than that. We will use a vocabulary size of 5000 for both datasets, containing most frequent words. 
-
-### baselines
+### Baselines
 1. Laplace smoothing:
 
 $$
@@ -173,5 +138,29 @@ Originally proposed in [this paper](https://www-i6.informatik.rwth-aachen.de/pub
 5. Modified Kneser-Ney:
 Originally proposed in [this paper](https://people.eecs.berkeley.edu/~klein/cs294-5/chen_goodman.pdf) and explained in [this blog post](http://www.foldl.me/2014/kneser-ney-smoothing/).
 
+### Results
+**perplexity on PTB**
 
+| model                                                             | PPL (test) |
+| ----------------------------------------------------------------- | ---------- |
+| Laplace                                                           | 335.5      |
+| Good-Turing                                                       | 152.1      |
+| Katz                                                              | 138.8      |
+| Kneser-Ney($$d$$=0.75)                                            | 118.9      |
+| Modified Kneser-Ney($$d_1$$=0.65, $d_2$=0.75)                     | 118.5      |
+| SimBased($$\gamma$$=0.06, $$\beta$$=10, $$k$$=50, $$t$$=10)       | 128.4      |
 
+**perplexity on Wikitext103**
+
+| model                                                           | PPL (test) |
+| --------------------------------------------------------------- | ---------- |
+| Laplace                                                         | 86.2       |
+| Good-Turing                                                     | 80.5       |
+| Katz                                                            | 80.6       |
+| Kneser-Ney($$d$$=0.75)                                          | 77.6       |
+| Modified Kneser-Ney($$d_1$$=0.65, $d_2$=0.75)                   | 77.6       |
+| SimBased($$\gamma$$=2e-3, $$\beta$$=10, $$k$$=50, $$t$$=10)     | 77.4       |
+
+As we can see, the similarity-based model surpasses the Katz backoff model by 8% on the PTB dataset and 4% on Wikitext103. However, both variations of the Kneser-Ney model show the least perplexity on the PTB dataset, and are just as good as the similarity-based model on Wikitext103. Interestingly, even the basic Laplace model demonstrates decent performance on the larger Wikitext103 dataset. This suggests that smoothing or generalization techniques tend to bring about more noticeable benefits when the training corpus is smaller. 
+
+Could the similarity-based approach hold more potential? In my next post, I'll discuss a new similarity-based bigram model that performs better than the Kneser-Ney model.
