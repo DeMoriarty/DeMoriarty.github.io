@@ -6,7 +6,7 @@ title: Extending the Similarity-Based Model to Higher Order N-grams (unfinished)
 This is the continuation of [Similarity-based Generalization in N-gram Models](..similarity_based).
 
 ## Extending to higher-order N-grams
-The interpolative nature of the bigram model can easily be extended to arbitrary order N-grams in a recursive manner. The N-gram model's final probability estimation ($$P_r$$) is an interpolation between the similarity-based model ($$P_{SIM}$$) of the current order and the estimated probability ($P_r$) of the preceding (N-1)th order. In the base case of a unigram model, $$P_r$$ is simply equal to the Maximum Likelihood Estimation ($$P_{MLE}$$):
+The interpolative nature of the bigram model can easily be extended to arbitrary order N-grams in a recursive manner. The N-gram model's final probability estimation ($$P_r$$) is an interpolation between the similarity-based estimate ($$P_{SIM}$$) of the current order and the estimated probability ($$P_r$$) of the preceding (N-1)th order. In the base case of a unigram model, $$P_r$$ is simply equal to the Maximum Likelihood Estimation ($$P_{MLE}$$):
 
 $$P_{r}(w_i \mid w_{i-n+1 : i-1}) = \gamma P_r(w_i \mid w_{i-n+2 : i-1}) + (1-\gamma)P_{SIM}(w_i \mid w_{i-n+1 : i-1})$$
 
