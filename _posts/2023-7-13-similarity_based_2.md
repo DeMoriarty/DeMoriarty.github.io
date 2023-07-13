@@ -6,7 +6,11 @@ title: An Imporved Similarity-Based Bigram Model
 In my previous post, I discussed the similarity-based bigram model (Dagan et al., 1998) and showed its performance against other classic ngram smoothing techniques. Although the original similarity-based bigram model had less perplexity than the Katz backoff model, it didn't fare as well as the two variations of the Kneser-Ney model on the smaller PTB dataset. In this blog post, I'll introduce a new similarity-based bigram model that surpasses all previous models.
 
 ## An Improved Model
-### **Discarding backoff**:
+
+The following changes are made to the original similarity-based bigram model.
+
+### Discarding backoff:
+
 The original model was a backoff model at the very top level:
 
 $$
@@ -28,7 +32,8 @@ $$
 \hat{P}(w_2 \mid w_1) = P_r(w_2 \mid w_1)
 $$
 
-### **Different distributional similarity methods**
+### Different distributional similarity methods
+
 In addition to the negative exponential of KL divergence used in the original paper, we will also explore the use of cosine similarity with following two distributional modeling methods:
 
 **Log of Laplace**
@@ -52,4 +57,50 @@ $$
 $$
 
 Here, $$(\vec{v}_a)_i$$ denotes the i'th element of the vector $$\vec{v}_a$$, and similarly $$V_i$$ refers to the i'th word in the vocabulary.
+
+Cosine similarity is calculated as follows:
+
+$$
+D(w_1, w_1 ^ \prime) = 
+\dfrac
+{
+	\vec{v}_{w_1} \cdot \vec{v}_{w_1 ^ \prime}
+}
+{ 
+	\| \vec{v}_{w_1} \|  \| \vec{v}_{w_1 ^ \prime} \| 
+}
+$$
+
+Because the similarity metric has changed to cosine similarity, the rescale function $$W$$ should also change correspondingly. I'll choose exponential function to be the rescaling function. 
+
+$$
+\begin{equation}
+	W(w_1, w_1 ^ \prime) = e^{ \beta D(w_1, w_1 ^ \prime )}
+\end{equation}
+$$
+
+Note that, in combination with the normalization during the calculation of $P_{SIM}$, it becomes equivalent to softmax with temperature.
+
+### Using similar words to estimate counts instead of probabilties
+
+$$P_{SIM}$$ 
+
+Originally, $$P_{SIM}$$ was calculated as the weighted average of the $$P_{MLE}$$ of each similar word.
+
+$$
+\begin{equation}
+	P_{SIM}(w_2 \mid w_1) = \sum_{w_1^ \prime \in S(w_1)}P_{MLE}(w_2 \mid w_1^ \prime)\dfrac{W(w_1, w_1^ \prime)}{\sum_{w_1^ \prime \in S(w_1)}W(w_1, w_1^ \prime)}
+\end{equation}
+$$
+
+Instead, now we will use similar words to estimate counts, rather than probabilities.
+
+$$
+\tilde{c}_{w_2 w_1} = \sum_{w_1^ \prime \in S(w_1)}c_{w_2 w_1^ \prime}
+\dfrac{
+	W(w_1^ \prime, w_1)
+}{
+	\sum_{w_1^ \prime \in S(w_1)}W(w_1^ \prime, w_1)
+}
+$$
 
