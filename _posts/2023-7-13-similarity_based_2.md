@@ -94,8 +94,8 @@ $$
 Instead, now we will use similar words to estimate counts, rather than probabilities.
 
 $$
-\tilde{C}(w_2 w_1) = \sum_{w_1^ \prime \in S(w_1)}
-C(w_2 w_1^ \prime)
+\tilde{C}(w_2, w_1) = \sum_{w_1^ \prime \in S(w_1)}
+C(w_2, w_1^ \prime)
 \dfrac{
 	W(w_1^ \prime, w_1)
 }{
@@ -106,8 +106,8 @@ $$
 $$
 P_{SIM}(w_2 \mid w_1) = 
 \dfrac
-{\tilde{C}(w_2 w_1)}
-{\sum_{w_1^ \prime \in S(w_1)} \tilde{C}(w_2 w_1^\prime)}
+{\tilde{C}(w_2, w_1)}
+{\sum_{w_1^ \prime \in S(w_1)} \tilde{C}(w_2, w_1^\prime)}
 $$
 
 ### Dynamic calculation of the interpolation parameter $$\gamma$$
@@ -141,6 +141,7 @@ $$
 $$
 
 2.
+
 $$
 \gamma = \dfrac{1}{
 	\alpha C(w_1, w_2) + 1
@@ -152,15 +153,15 @@ $$
 $$
 P_{SIM}(w_2 \mid w_1) = 
 \dfrac
-{\tilde{C}(w_2 w_1)}
-{\sum_{w_1^ \prime \in S(w_1)} \tilde{C}(w_2 w_1^\prime)}
+{\tilde{C}(w_2, w_1)}
+{\sum_{w_1^ \prime \in S(w_1)} \tilde{C}(w_2, w_1^\prime)}
 $$
 
 4.
 
 $$
-\tilde{C}(w_2 w_1) = \sum_{w_1^ \prime \in S(w_1)}
-C(w_2 w_1^ \prime)
+\tilde{C}(w_2, w_1) = \sum_{w_1^ \prime \in S(w_1)}
+C(w_2, w_1^ \prime)
 \dfrac{
 	W(w_1^ \prime, w_1)
 }{
@@ -188,8 +189,5 @@ D(w_1, w_1 ^ \prime) =
 	\| \vec{v}_{w_1} \|  \| \vec{v}_{w_1 ^ \prime} \| 
 }
 $$
-
-7.
-
 
 
