@@ -110,45 +110,17 @@ P_{SIM}(w_2 \mid w_1) =
 {\sum_{w_1^ \prime \in S(w_1)} \tilde{C}(w_2, w_1^\prime)}
 $$
 
-### Dynamic calculation of the interpolation parameter $$\gamma$$
-
-$$\gamma$$ is a parameter that's used to determine the contribution of the unigram and bigram models during the calculation $$P_r$$. It's a free parameter of the model that's chosen through some form of search.
-
-$$
-\begin{equation}
-	P_{r}(w_2 \mid w_1) = \gamma P_{MLE}(w_2) + (1 - \gamma)P_{SIM}(w_2 \mid w_1)
-\end{equation}
-$$
-
-In the improved model, $$\gamma$$ is determined dynamically depending on $$C(w_1, w_2)$$:
-
-$$
-\gamma = \dfrac{1}{
-	\alpha C(w_1, w_2) + 1
-}
-$$
-
-This means, when $$C(w_1, w_2)$$ is equal to 0, $$P_r$$ solely depends $$P_{MLE}(w_2)$$. If the bigram ($$w_1, w_2$$) is more frequent, $$P_{SIM}$$ will have more contribution towards the final probability estimate. Note that this step introduces another free parameter $$\alpha$$.
-
 ### The final model
 
 1. 
 
 $$
 \begin{equation}
-	\hat{P}(w_2 \mid w_1) = P_{r}(w_2 \mid w_1) = \gamma P_{MLE}(w_2) + (1 - \gamma)P_{SIM}(w_2 \mid w_1)
+	\hat{P}(w_2 \mid w_1) = P_{r}(w_2 \mid w_1) = \gamma P_{b}(w_2 \mid w_1) + (1 - \gamma)P_{SIM}(w_2 \mid w_1)
 \end{equation}
 $$
 
 2.
-
-$$
-\gamma = \dfrac{1}{
-	\alpha C(w_1, w_2) + 1
-}
-$$
-
-3.
 
 $$
 P_{SIM}(w_2 \mid w_1) = 
@@ -157,7 +129,7 @@ P_{SIM}(w_2 \mid w_1) =
 {\sum_{w_1^ \prime \in S(w_1)} \tilde{C}(w_2, w_1^\prime)}
 $$
 
-4.
+3.
 
 $$
 \tilde{C}(w_2, w_1) = \sum_{w_1^ \prime \in S(w_1)}
@@ -169,7 +141,7 @@ C(w_2, w_1^ \prime)
 }
 $$
 
-5.
+4.
 
 $$
 \begin{equation}
@@ -177,7 +149,7 @@ $$
 \end{equation}
 $$
 
-6.
+5.
 
 $$
 D(w_1, w_1 ^ \prime) = 
