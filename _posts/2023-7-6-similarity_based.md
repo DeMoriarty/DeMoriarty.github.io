@@ -141,7 +141,6 @@ Originally proposed in [this paper](https://people.eecs.berkeley.edu/~klein/cs29
 ### Results
 **perplexity on PTB**
 
-{:class="table table-bordered"}
 | model                                                             | PPL (test) |
 | ----------------------------------------------------------------- | ---------- |
 | Laplace                                                           | 335.5      |
@@ -150,10 +149,10 @@ Originally proposed in [this paper](https://people.eecs.berkeley.edu/~klein/cs29
 | Kneser-Ney($$d$$=0.75)                                            | 118.9      |
 | Modified Kneser-Ney($$d_1$$=0.65, $d_2$=0.75)                     | 118.5      |
 | SimBased($$\gamma$$=0.06, $$\beta$$=10, $$k$$=50, $$t$$=10)       | 128.4      |
+{:.mbtablestyle}
 
 **perplexity on Wikitext103**
 
-{:class="table table-bordered"}
 | model                                                           | PPL (test) |
 | --------------------------------------------------------------- | ---------- |
 | Laplace                                                         | 86.2       |
@@ -162,6 +161,7 @@ Originally proposed in [this paper](https://people.eecs.berkeley.edu/~klein/cs29
 | Kneser-Ney($$d$$=0.75)                                          | 77.6       |
 | Modified Kneser-Ney($$d_1$$=0.65, $d_2$=0.75)                   | 77.6       |
 | SimBased($$\gamma$$=2e-3, $$\beta$$=10, $$k$$=50, $$t$$=10)     | 77.4       |
+{:.mbtablestyle}
 
 As we can see, the similarity-based model surpasses the Katz backoff model by 8% on the PTB dataset and 4% on Wikitext103. However, both variations of the Kneser-Ney model show the least perplexity on the PTB dataset, and are just as good as the similarity-based model on Wikitext103. Interestingly, even the basic Laplace model demonstrates decent performance on the larger Wikitext103 dataset. This suggests that smoothing or generalization techniques tend to bring about more noticeable benefits when the training corpus is smaller. 
 
