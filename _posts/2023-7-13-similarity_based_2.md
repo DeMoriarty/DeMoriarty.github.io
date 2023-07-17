@@ -1,19 +1,19 @@
 ---
 layout: post
-title: An Imporved Similarity-Based Bigram Model (unfinished)
+title: A Refined Similarity-Based Bigram Model (unfinished)
 ---
 
 In [my previous post](../similarity_based), I discussed the similarity-based bigram model (Dagan et al., 1998) and showed its performance against other classic ngram smoothing techniques. Although the original similarity-based bigram model had less perplexity than the Katz backoff model, it didn't fare as well as the two variations of the Kneser-Ney model on the smaller PTB dataset. In this blog post, I'll introduce a new similarity-based bigram model that surpasses all previous models.
 
-## An Enhanced Model
+## A Refined Model
 
-This enhanced bigram model, based on Dagan et al's work, includes several evidence-based tweaks. The first notable change is eliminating backoff. The final probability estimate, represented as $$\hat{P}$$, now stems directly from $$P_r$$. This is a blend of a raw similarity-based estimate, $$P_{SIM}$$, and a complementary model $$P_c$$. The weightage of each part in the final estimate is controlled by an interpolation parameter, $$\lambda$$. This is a variable value between $$[0, 1]$$, and can be set using a hyperparameter search procedure, like grid search.
+This new similarity-based model, based on Dagan et al's work, includes several evidence-based tweaks. The first notable change is eliminating backoff. The final probability estimate, represented as $$\hat{P}$$, now stems directly from $$P_r$$, which is a mixture of a raw similarity-based estimate, $$P_{SIM}$$, and a complementary model $$P_c$$. The weightage of each part in the final estimate is controlled by an interpolation parameter, $$\lambda$$. This is a variable value between $$[0, 1]$$, and can be set using a hyperparameter search procedure, like grid search.
 
 $$
 \hat{P}(w_2 \mid w_1) = P_{r}(w_2 \mid w_1) = \gamma P_c(w_2 \mid w_1) + (1 - \gamma)P_{SIM}(w_2 \mid w_1)
 $$
 
-In the older model, $$P_{SIM}$$ was calculated by averaging maximum likelihood estimates of the next word probability for each word in $$S(w_1)$$. But in this new model, similar words in $$S(w_1)$$ are used to estimate bigram counts, and then $$P_{SIM}$$ is derived by normalizing these estimates.
+In the original model, $$P_{SIM}$$ was calculated by averaging maximum likelihood estimates of the next word probability for each word in $$S(w_1)$$. But in this new model, similar words in $$S(w_1)$$ are used to estimate bigram counts, and then $$P_{SIM}$$ is derived by normalizing these estimates.
 
 $$
 \tilde{C}(w_1, w_2) = \sum_{w_1^ \prime \in S(w_1)}
@@ -32,7 +32,7 @@ P_{SIM}(w_2 \mid w_1) =
 {\sum_{w_1^ \prime \in S(w_1)} \tilde{C}(w_2, w_1^\prime)}
 $$
 
-$$W(w_1^ \prime, w_1)$$ stands for the adjusted similarity score. In the new model, we use cosine similarity as the similarity measure, given its effectiveness in distributional semantics.
+$$W(w_1^ \prime, w_1)$$ stands for the adjusted similarity score. In this model, we use cosine similarity as the similarity measure, given its effectiveness in distributional semantics.
 
 $$
 D(w_1, w_1 ^ \prime) = 
