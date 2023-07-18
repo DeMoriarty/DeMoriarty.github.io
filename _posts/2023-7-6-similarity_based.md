@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Similarity-based Generalization in N-gram Models (unfinished)
+title: Similarity-based Generalization in N-gram Models
 ---
 
 If you're new to N-gram models, I recommend starting with my [introduction to N-gram language models](../ngram_intro).
