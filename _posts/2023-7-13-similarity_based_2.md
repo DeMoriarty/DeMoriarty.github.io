@@ -21,7 +21,7 @@ C(w_1^ \prime, w_2)
 \dfrac{
 	W(w_1^ \prime, w_1)
 }{
-	\sum_{w_1^ \prime\prime \in S(w_1)}W(w_1^ \prime\prime, w_1)
+	\sum_{w_1'' \in S(w_1)}W(w_1'', w_1)
 }
 $$
 
@@ -57,7 +57,7 @@ $$
 \dfrac{
 	e^{ \beta W(w_1, w_1^ \prime) }
 }{
-	\sum_{w_1^ \prime\prime \in S(w_1)} e^{ \beta W(w_1, w_1^ \prime\prime) }
+	\sum_{w_1^ \prime\prime \in S(w_1)} e^{ \beta W(w_1, w_1'' ) }
 }
 $$
 
