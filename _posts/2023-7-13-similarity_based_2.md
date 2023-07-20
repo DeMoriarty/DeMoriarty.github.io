@@ -63,7 +63,7 @@ $$
 
 $$\vec{v}_{w_1}$$ represents the distributional vector representation of $$w_1$$. We'll explore two possible distributional methods: 
 
-**Log of Laplace**
+**Log of Laplace (LOG)**
 
 $$
 (\vec{v}_a)_i = \log( C(a, V_i) + 1)
