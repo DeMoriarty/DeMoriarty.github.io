@@ -100,7 +100,7 @@ Here, $$(\vec{v}_a)_i$$ denotes the i'th element of the vector $$\vec{v}_a$$, an
 The complementary model, $P_c$, can be picked from the existing n-gram methods. We will consider the unigram model, Katz backoff model, and Kneser-Ney bigram and unigram models as possible choices for the complementary model.
 
 ## Experiments
-Before we dive into our proposed method, let's first review the performance of other base models:
+Before we dive into our proposed method, let's first review the performance of other baseline models:
 
 | model                                                           | PPL (PTB) | PPL (Wikitext2) | PPL (Wikitext103) |
 | --------------------------------------------------------------- | --------- | --------------- | ----------------- |
