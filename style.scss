@@ -117,6 +117,10 @@ img {
   filter: hue-rotate(180deg);
 }
 
+.inverted-plot2 {
+  filter: invert(1) hue-rotate(180deg);
+}
+
 .bg-white {
   background: white;
 }
