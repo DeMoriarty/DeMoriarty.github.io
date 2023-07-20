@@ -28,8 +28,8 @@ $$
 $$
 P_{SIM}(w_2 \mid w_1) = 
 \dfrac
-{\tilde{C}(w_2, w_1)}
-{\sum_{w_1^ \prime \in S(w_1)} \tilde{C}(w_2, w_1^\prime)}
+{\tilde{C}(w_1, w_2)}
+{\sum_{w_1^ \prime \in S(w_1)} \tilde{C}(w_1^\prime, w_2)}
 $$
 
 $$W(w_1^ \prime, w_1)$$ stands for the adjusted similarity score. In this model, we use cosine similarity as the similarity measure, given its effectiveness in distributional semantics.
