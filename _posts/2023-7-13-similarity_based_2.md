@@ -141,14 +141,16 @@ When we pick a unigram model as the complementary model, we see that the perplex
 
 The testset perplexity seems to hit its lowest when $$k=1$$. Meaning, when the set of similar words $$S(w_1)$$ only contains one word, which is $$w_1$$ itself. In this case, $$P_{SIM}(w_2 \mid w_1)$$ would simply equal $$P_{MLE}(w_2 \mid w_1)$$. This implies that the similarity-based model is only worsening the performance. This observation suggests that the benefit of similarity-based generalization decreases as the dataset size grows larger. To verify this, we'll investigate the effect of trainset size on test set perplexity. We'll use different fractions of all the bigrams in the Wikitext103 trainset to train the model and see how $$k$$ impacts the model performance:
 
-[insert plot here]
+<img class="inverted-plot" src="https://raw.githubusercontent.com/DeMoriarty/DeMoriarty.github.io/master/images/LOG_vs_PPMI.png" width="100%"/>
 
 We notice a qualitative difference between using 0.1% to 1% and 10% to 100% of the trainset. Higher values of $$k$$ lead to lower perplexities when the fraction of the trainset used is below 1%, but when it's above 10%, the perplexity is at its lowest when $$k=1$$. This aligns with our earlier hypothesis that similarity-based generalization is only helpful when the dataset is smaller. Could this be a hyperparameter issue, particularly the parameter $$r$$, which is added to the count of all bigrams before calculating the similarities?
 
 #### Influence of $$r$$ on different fractions of Wikitext103
 
-[insert transet_fraction=0.1 plot here]
-[insert transet_fraction=1.0 plot here]
+<p float="left">
+  <img class="inverted-plot" src="https://raw.githubusercontent.com/DeMoriarty/DeMoriarty.github.io/master/images/varying_r_10.png" width="49%"/>
+  <img class="inverted-plot" src="https://raw.githubusercontent.com/DeMoriarty/DeMoriarty.github.io/master/images/varying_r_100.png" width="49%"/>
+</p>
 
 Examining the plot, it's clear that the choice of $$r$$ directly affects the model's perplexity. When we only use 1% of the trainset (~1M words), LOG with $$r=1.0$$ is the clear winner. When we use 10% of the trainset (~10M words), and set $$r=0$$ with PPMI, we notice the model performance improving as k grows, indicating the effectiveness of the similarity-based model. However, when the entire trainset is used to train the model, the similarity-based model still fails to improve performance, as the testset perplexity still increases as we increase k from 1. However, when $$r=0$$, the rate of perplexity increase is much slower than $$r=1$$.
 
@@ -160,8 +162,11 @@ Next, we will see how the choice of $$\gamma$$ and $$P_c$$ impacts model perplex
 
 This time, we fix $$t=0.1$$, $$r=1.0$$, $$k=40$$ and use LOG as the method for measuring distributional similarity.
 
-[insert pr_vs_gamma plot on ptb here]
-[insert pr_vs_gamma plot on wiki2 here]
+<p float="left">
+  <img class="inverted-plot" src="https://raw.githubusercontent.com/DeMoriarty/DeMoriarty.github.io/master/images/varying_pr_vs_gamma_ptb.png" width="49%"/>
+  <img class="inverted-plot" src="https://raw.githubusercontent.com/DeMoriarty/DeMoriarty.github.io/master/images/varying_pr_vs_gamma_wikitext2.png" width="49%"/>
+</p>
+
 
 As we can observe, using the Kneser-Ney bigram model as the complementary model seems to deliver the best results, which isn't surprising given the reputation of the Kneser-Ney model among N-gram models. Importantly, when $$\gamma=0.7$$, the mix of the Kneser-Ney model and similarity-based model outperforms the Kneser-Ney model alone, with a 2% and 1.5% drop in testset perplexity on PTB and Wikitext2, respectively. Next, let's see if we can maximize this by increasing the value of $$k$$:
 
@@ -183,7 +188,10 @@ Up until this point, we have kept most of the other parameters fixed. From the m
 #### effect of $$\beta$$ on PTB and Wikitext2
 We still use the same fixed parameters used in the previous experiment, while changing the value of $$\beta$$:
 
-[insert beta_ptb plot here]
-[insert beta_wikitext2 plot here]
+<p float="left">
+  <img class="inverted-plot" src="https://raw.githubusercontent.com/DeMoriarty/DeMoriarty.github.io/master/images/varying_beta_ptb.png" width="49%"/>
+  <img class="inverted-plot" src="https://raw.githubusercontent.com/DeMoriarty/DeMoriarty.github.io/master/images/varying_beta_wikitext2.png" width="49%"/>
+</p>
+
 
 It seems that the optimal $$\beta$$ varies depending on the dataset. For PTB, a $$\beta$$ value of 8.0 appears to yield the best results. On the other hand, for Wikitext2, a $$\beta$$ value of 10.0 seems to be the most effective.
