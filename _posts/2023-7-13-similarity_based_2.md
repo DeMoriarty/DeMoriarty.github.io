@@ -7,7 +7,7 @@ In [my previous post](../similarity_based), I discussed the similarity-based big
 
 ## A Refined Model
 
-This new similarity-based model, based on Dagan et al's work, includes several evidence-based tweaks. The first notable change is eliminating backoff. The final probability estimate, represented as $$\hat{P}$$, now stems directly from $$P_r$$, which is a mixture of a raw similarity-based estimate, $$P_{SIM}$$, and a complementary model $$P_c$$. The weightage of each part in the final estimate is controlled by an interpolation parameter, $$\lambda$$. This is a variable value between $$[0, 1]$$, and can be set using a hyperparameter search procedure, like grid search.
+This new similarity-based model, based on Dagan et al's work, includes several evidence-based modifications. The first notable change is eliminating backoff. The final probability estimate, represented as $$\hat{P}$$, now stems directly from $$P_r$$, which is a mixture of a raw similarity-based estimate, $$P_{SIM}$$, and a complementary model $$P_c$$. The weightage of each part in the final estimate is controlled by an interpolation parameter, $$\lambda$$. This is a variable value between $$[0, 1]$$, and can be set using a hyperparameter search procedure, like grid search.
 
 $$
 \hat{P}(w_2 \mid w_1) = P_{r}(w_2 \mid w_1) = \gamma P_c(w_2 \mid w_1) + (1 - \gamma)P_{SIM}(w_2 \mid w_1)
