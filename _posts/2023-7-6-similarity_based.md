@@ -161,9 +161,9 @@ Originally proposed in [this paper](https://people.eecs.berkeley.edu/~klein/cs29
 | Katz                                                            | 80.6       |
 | Kneser-Ney($$d$$=0.75)                                          | 77.6       |
 | Modified Kneser-Ney($$d_1$$=0.65, $d_2$=0.75)                   | 77.6       |
-| SimBased($$\gamma$$=2e-3, $$\beta$$=10, $$k$$=50, $$t$$=10)     | 77.4       |
+| SimBased($$\gamma$$=2e-3, $$\beta$$=10, $$k$$=50, $$t$$=10)     | 80.5       |	
 {:.mbtablestyle}
 
-As we can see, the similarity-based model surpasses the Katz backoff model by 8% on the PTB dataset and 4% on Wikitext103. However, both variations of the Kneser-Ney model show the least perplexity on the PTB dataset, and are just as good as the similarity-based model on Wikitext103. Interestingly, even the basic Laplace model demonstrates decent performance on the larger Wikitext103 dataset. This suggests that smoothing or generalization techniques tend to bring about more noticeable benefits when the training corpus is smaller. 
+As we can see, the similarity-based model surpasses the Katz backoff model by 8% on the PTB dataset and 4% on Wikitext103. However, both variations of the Kneser-Ney model show the least perplexity on both datasets. Interestingly, even the basic Laplace model demonstrates decent performance on the larger Wikitext103 dataset. This suggests that smoothing or generalization techniques tend to bring about more noticeable benefits when the training corpus is smaller. 
 
-Could the similarity-based approach hold more potential? In [my next post](../similarity_based_2), I'll discuss a new similarity-based bigram model that performs better than the Kneser-Ney model.
+Could the similarity-based approach hold more potential? In [my next post](../similarity_based_2), we'll take a look at a refined similarity-based model.
