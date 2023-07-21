@@ -1,9 +1,9 @@
 ---
 layout: post
-title: A Refined Similarity-Based Bigram Model (unfinished)
+title: A Refined Similarity-Based Bigram Model
 ---
 
-In [my previous post](../similarity_based), I discussed the similarity-based bigram model (Dagan et al., 1998) and showed its performance against other classic ngram smoothing techniques. Although the original similarity-based bigram model had less perplexity than the Katz backoff model, it didn't fare as well as the two variations of the Kneser-Ney model on the smaller PTB dataset. In this blog post, I'll introduce a new similarity-based bigram model that surpasses all previous models.
+In [my previous post](../similarity_based), I discussed the similarity-based bigram model (Dagan et al., 1998) and showed its performance against other classic ngram smoothing techniques. Although the original similarity-based bigram model had less perplexity than the Katz backoff model, it didn't fare as well as the interpolated Kneser-Ney model on both Penn-tree bank (PTB) and Wikitext103 datasets. In this blog post, I'll introduce a new similarity-based bigram model with better performance.
 
 ## A Refined Model
 
@@ -198,3 +198,9 @@ We still use the same fixed parameters used in the previous experiment, while ch
 
 
 It seems that the optimal $$\beta$$ varies depending on the dataset. For PTB, a $$\beta$$ value of 8.0 appears to yield the best results. On the other hand, for Wikitext2, a $$\beta$$ value of 10.0 seems to be the most effective.
+
+## Wrapping Up
+
+To sum up, our experiments have shown that the similarity-based model is particularly effective with smaller datasets. While it can't quite match the Kneser-Ney model on its own, it performs better when combined with Kneser-Ney model. However, when we tested our similarity-based approach on larger datasets, like the Wikitext103, it didn't really contribute to reducing the test set perplexity. This might suggest that this similarity-based approach is better suited to smaller datasets. But it's important to keep in mind that this limitation might only apply to our current model, and there could be other, more sophisticated similarity-based models out there that can efficiently incorporate the advantages of models like the Kneser-Ney model.
+
+Up next, we will extend the formulation of our similarity-based bigram model to N-grams of any order, starting with trigram models. As we do this, we'll start to consider **compositionality**, a key feature of natural language.
