@@ -14,14 +14,14 @@ An interesting question here is how we decide which words are similar. The answe
 ## The case for bigrams
 The similarity-based bigram model (Dagan et al., 1998) has several key components:
 
-1. $$S(w_1)$$: a set of words that are similar to the context word $$w_1$$. $$S(w_1)$$ contains $$k$$ elements, where $$k$$ is a hyperparameter; 
-2. $$W(w_1^ \prime, w_1)$$: the rescaled (dis)similarity score between $$w_1$$ and  $$w_1^ \prime$$, where $$w_1^ \prime$$ is a member of $$S(w_1)$$;
-3. $$P_{MLE}(w_2 \mid w_1)$$: the Maximum Likelihood probability estimation of $$w_2$$ occurring after $w_1$;
-4. $$P_{SIM}(w_2 \mid w_1)$$: an interpolation model that mixes the $$P_{MLE}$$ of the next word given each word in $$S(w_1)$$ as context;
-5. $$P_d(w_2 \mid w_1)$$: a discounted bigram model such as the Good-Turing model;
-6. $$P_r(w_2 \mid w_1)$$: an interpolation model that mixes a unigram model $$P_{MLE}(w_2)$$ with $$P_{SIM}$$.
+1. $$P_{MLE}(w_2 \mid w_1)$$: the Maximum Likelihood probability estimation of $$w_2$$ occurring after $w_1$;
+2. $$P_{SIM}(w_2 \mid w_1)$$: an interpolation model that averages the $$P_{MLE}$$ of the next word given $$w_1'$$ as context, for all $$w_1'$$s in $$S(w_1)$$;
+3. $$P_d(w_2 \mid w_1)$$: a discounted bigram model such as the Good-Turing model;
+4. $$P_r(w_2 \mid w_1)$$: an interpolation model that mixes a unigram model $$P_{MLE}(w_2)$$ with $$P_{SIM}(w_2 \mid \w_1)$$.
+5. $$S(w_1)$$: a set of words that are similar to the context word $$w_1$$. $$S(w_1)$$ contains $$k$$ elements, where $$k$$ is a hyperparameter; 
+6. $$W(w_1^ \prime, w_1)$$: the rescaled (dis)similarity score between $$w_1$$ and  $$w_1'$$, where $$w_1'$$ is a member of $$S(w_1)$$;
 
-At the very top, the similarity-based bigram model is simply a backoff model, similar to the Katz backoff (Katz, 1987). In a backoff model, when a given bigram is seen in the corpus, it simply uses the ML probabilities, but when the bigram is unseen, it uses the probability estimates from a supplementary model. But unlike Katz, where the supplementary model is a lower order model, the similarity-based bigram model backs off to another interpolation model ($$P_r$$):
+At the very top level, the similarity-based bigram model is simply a backoff model, similar to the Katz backoff (Katz, 1987). In a backoff model, when a given bigram is seen in the corpus, it simply uses the ML probabilities, but when the bigram is unseen, it uses the probability estimates from a supplementary model. But unlike Katz, where the supplementary model is a lower order model, the similarity-based bigram model backs off to another interpolation model ($$P_r$$):
 
 $$
 \begin{equation}
