@@ -12,7 +12,7 @@ The Similarity-based Generalization approach was initially suggested for bigram 
 An interesting question here is how we decide which words are similar. The answer lies in distributional similarity. To understand what this means, I recommend checking out my [introduction to Distributional Semantics](../distributional_semantics).
 
 ## The case for bigrams
-The similarity-based bigram model (Dagan et al., 1998) has three key components:
+The similarity-based bigram model (Dagan et al., 1998) has several key components:
 
 1. $$S(w_1)$$: a set of words that are similar to the context word $$w_1$$. $$S(w_1)$$ contains $$k$$ elements, where $$k$$ is a hyperparameter; 
 2. $$W(w_1^ \prime, w_1)$$: the rescaled (dis)similarity score between $$w_1$$ and  $$w_1^ \prime$$, where $$w_1^ \prime$$ is a member of $$S(w_1)$$;
