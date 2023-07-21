@@ -14,10 +14,10 @@ An interesting question here is how we decide which words are similar. The answe
 ## The case for bigrams
 The similarity-based bigram model (Dagan et al., 1998) has several key components:
 
-1. $$P_{MLE}(w_2 \mid w_1)$$: the Maximum Likelihood probability estimation of $$w_2$$ occurring after $w_1$;
+1. $$P_{MLE}(w_2 \mid w_1)$$: the Maximum Likelihood probability estimation of $$w_2$$ occurring after $$w_1$$;
 2. $$P_{SIM}(w_2 \mid w_1)$$: an interpolation model that averages the $$P_{MLE}$$ of the next word given $$w_1'$$ as context, for all $$w_1'$$s in $$S(w_1)$$;
 3. $$P_d(w_2 \mid w_1)$$: a discounted bigram model such as the Good-Turing model;
-4. $$P_r(w_2 \mid w_1)$$: an interpolation model that mixes a unigram model $$P_{MLE}(w_2)$$ with $$P_{SIM}(w_2 \mid \w_1)$$.
+4. $$P_r(w_2 \mid w_1)$$: an interpolation model that mixes a unigram model $$P_{MLE}(w_2)$$ with $$P_{SIM}(w_2 \mid w_1)$$.
 5. $$S(w_1)$$: a set of words that are similar to the context word $$w_1$$. $$S(w_1)$$ contains $$k$$ elements, where $$k$$ is a hyperparameter; 
 6. $$W(w_1^ \prime, w_1)$$: the rescaled (dis)similarity score between $$w_1$$ and  $$w_1'$$, where $$w_1'$$ is a member of $$S(w_1)$$;
 
