@@ -18,7 +18,17 @@ P(\texttt{states} \mid \texttt{united} ) = \dfrac{
 }
 $$
 
-This equation can be generalized to arbitrary order N-grams. The following expression estimates the probability of the i'th word in a sequence, given the previous n-1 words has occurred:
+This can be generalized to arbitrary order N-grams as such:
+
+$$
+P(\texttt{be} \mid \texttt{to be or not to} ) = \dfrac{
+	C(\texttt{to be or not to be}) 
+}{
+	C(\texttt{to be or not to})
+}
+$$
+
+More formally, to estimate the probability of the i'th word in a sequence, given the previous n-1 words has occurred, we use the following equation:
 
 $$
 P(w_i | w_{i-n+1:i-1}) = \dfrac{
