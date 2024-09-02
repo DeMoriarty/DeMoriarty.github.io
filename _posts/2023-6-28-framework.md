@@ -2,6 +2,7 @@
 layout: post
 title: A Developing Framework for Natural Language Systems
 comments: true
+published: false
 ---
 
 In order to comprehend the human mind and create interpretable and reliable AI systems, I firmly believe in the necessity of a practical theory of natural language. While classical linguistic theories hold some truth and offer valuable insights into language's nature, they have not achieved significant success in the field of NLP. This can be primarily attributed to their neglect of a crucial aspect: language acquisition. The primary objective of this project is to develop a comprehensive framework for acquiring, understanding, and generating natural language, with particular emphasis on efficient learning and generalization from limited observations. By pursuing this goal, we aim to enhance our understanding of both machine and human intelligence, ultimately leading to the development of interpretable and robust AI systems.
