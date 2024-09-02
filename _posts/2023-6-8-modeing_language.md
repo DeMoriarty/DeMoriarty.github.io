@@ -1,6 +1,7 @@
 ---
 layout: post
 title: On Interpretable Language Modeling
+published: false
 ---
 
 How do we acquire and utilize language? How do infants learn word meanings, word compositions, and grammar? How do children produce new phrases or sentences they have never heard before? Furthermore, how does language relate to intelligence? These are questions that have captivated researchers for many years.
